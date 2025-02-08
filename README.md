@@ -1,4 +1,4 @@
-`npm run dev` in `AetherScan/server` to start backend server @ `http://localhost:8081/api`
+`npm run dev` in `AetherScan/server` to start backend server @ `http://localhost:8080/api`
 
 Create another tab in your terminal...
 
