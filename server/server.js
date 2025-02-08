@@ -1,0 +1,21 @@
+const express = require("express");
+const app = express();
+const cors = require('cors');
+const corsOptions = {
+  origin: ["http//localhost:5173"],
+  // methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  // allowedHeaders: ['Content-Type', 'Authorization'],
+  // credentials: true
+};
+
+app.use(cors(corsOptions));
+
+app.get("/api", (req, res) => {
+  res.json({"fruits": ["apple", "orange", "banana"]});
+});
+
+let port = 8081;
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
+
