@@ -7,6 +7,3 @@
 You might have to do `npm install` for dependencies somewhere along the way...
 
 [Video used to init the repo](https://www.youtube.com/watch?v=mKmxc8TcWQ8)
-
-
-test
