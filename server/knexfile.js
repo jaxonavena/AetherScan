@@ -17,6 +17,14 @@ module.exports = {
     useNullAsDefault: true, // Suppress the default value warning
   },
 
+  test: {
+    client: 'sqlite3',
+    connection: {
+      filename: path.join(__dirname, '__tests__', 'test-database.sqlite')
+    },
+    useNullAsDefault: true
+  },
+
   staging: {
     client: 'postgresql',
     connection: {

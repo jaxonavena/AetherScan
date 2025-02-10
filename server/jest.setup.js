@@ -1,0 +1,1 @@
+process.env.DB_ENV = 'test'; // set env to test for all jest tests

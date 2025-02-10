@@ -5,6 +5,9 @@
 
 /** @type {import('jest').Config} */
 const config = {
+   // Add the setup file to be executed before all tests
+   setupFiles: ['<rootDir>/jest.setup.js'], // Adjust path if needed
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 

@@ -13,6 +13,10 @@ You might have to do `npm install` for dependencies somewhere along the way...
 
 1. `npx knex migrate:latest` from `server` directory
 
-### To check on the DB schema
+### To check on the DB schema:
 
 1. `./scripts/check-schema.js` from `server` directory
+
+
+## To run tests:
+1. `npm test` from `server` directory
