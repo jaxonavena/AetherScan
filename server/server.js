@@ -1,23 +1,31 @@
 const express = require("express");
-const sqliteDB = require("./db/sqlite");
 const userRoutes = require("./routes/userRoutes");
-// const connectMongo = require("./db/mongo");
+const knex = require('knex')(require('./knexfile').development);
 
 const app = express();
+
 const cors = require('cors');
 const corsOptions = {
   origin: ["http://localhost:5173"],
 };
 app.use(cors(corsOptions));
+
+app.use(express.json());
 app.use("/users", userRoutes);
 
-// Connect databases
-// connectMongo(); // MongoDB setup in the future
-
 // Ex. route with SQLite3
+// app.get("/users", async (req, res) => {
+//   const users = await sqliteDB.select("*").from("users");
+//   res.json(users);
+// });
+
 app.get("/users", async (req, res) => {
-  const users = await sqliteDB.select("*").from("users");
-  res.json(users);
+  try {
+    const users = await knex.select("*").from("users");
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 // From YouTube video
