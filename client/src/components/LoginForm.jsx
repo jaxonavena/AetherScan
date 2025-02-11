@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 const LoginForm = ({ onLogin }) => {
     const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = (event) => {
@@ -16,10 +17,23 @@ const LoginForm = ({ onLogin }) => {
                 <label>
                     Username:
                     <input
-                        type="text" 
+                        type="text"
                         value={username}
                         onChange={(e) => setUsername(e.target.value)}
                         placeholder="Enter your username"
+                        required
+                        />
+                </label>
+            </div>
+            {/* Email form section */}
+            <div>
+                <label>
+                    Email:
+                    <input
+                        type="text"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder="Enter your email"
                         required
                         />
                 </label>
@@ -29,7 +43,7 @@ const LoginForm = ({ onLogin }) => {
                 <label>
                     Password:
                     <input
-                        type="text" 
+                        type="text"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Enter your password"
