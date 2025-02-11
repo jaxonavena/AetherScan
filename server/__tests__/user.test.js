@@ -3,7 +3,7 @@
 const knex = require('knex');
 const knexfile = require('../knexfile');
 
-const db = knex(knexfile.development);
+const db = knex(knexfile.test);
 
 beforeAll(async () => {
   await db.migrate.latest(); // make sure migrations are run before tests
@@ -24,7 +24,7 @@ beforeEach(async () => {
 
 describe('User model', () => {
   it('should insert a new user', async () => {
-    const user = { name: 'jaxon', email: 'jaxon@example.com' };
+    const user = { name: 'jaxon', email: 'jaxon@example.com', password: "123" };
 
     const [newUser] = await db('users').insert(user).returning('*');
 
@@ -34,7 +34,7 @@ describe('User model', () => {
   });
 
   it('should retrieve a user by email', async () => {
-    const user = { name: 'jaxon', email: 'jaxon@example.com' };
+    const user = { name: 'jaxon', email: 'jaxon@example.com', password: "123" };
 
     const [newUser] = await db('users').insert(user).returning('*');
 
@@ -44,10 +44,10 @@ describe('User model', () => {
   });
 
   it('should throw an error when email is not unique', async () => {
-    const user = { name: 'jaxon', email: 'jaxon@example.com' };
+    const user = { name: 'jaxon', email: 'jaxon@example.com', password: "123" };
     const [newUser] = await db('users').insert(user).returning('*');
 
-    const otherUser = { name: 'achraf', email: 'jaxon@example.com' };
+    const otherUser = { name: 'achraf', email: 'jaxon@example.com', password: "321" };
 
     await expect(
       db('users').insert(otherUser).returning('*')
@@ -55,7 +55,7 @@ describe('User model', () => {
   });
 
   it('should update a user', async () => {
-    const user = { name: 'jaxon', email: 'jaxon@example.com' };
+    const user = { name: 'jaxon', email: 'jaxon@example.com', password: "123"  };
 
     const [newUser] = await db('users').insert(user).returning('*');
 
@@ -68,7 +68,7 @@ describe('User model', () => {
   });
 
   it('should delete a user', async () => {
-    const user = { name: 'jaxon', email: 'jaxon@example.com' };
+    const user = { name: 'jaxon', email: 'jaxon@example.com', password: "123"  };
 
     const [newUser] = await db('users').insert(user).returning('*');
 

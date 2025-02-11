@@ -22,6 +22,9 @@ module.exports = {
     connection: {
       filename: path.join(__dirname, '__tests__', 'test-database.sqlite')
     },
+    migrations: {
+      directory: path.join(__dirname, "db", "migrations"),
+    },
     useNullAsDefault: true
   },
 
