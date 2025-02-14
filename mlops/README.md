@@ -1,4 +1,4 @@
-# Machine Learning Opeartions
+# Machine Learning Operations
 Directory used to store files related to model weights, inference tests, training data and related functions.
 
 ## Setup
