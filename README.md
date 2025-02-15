@@ -17,6 +17,17 @@ You might have to do `npm install` for dependencies somewhere along the way...
 
 1. `./scripts/check-schema.js` from `server` directory
 
+### To check on a table schema:
+
+1. `./scripts/check-table-schema.js <table_name>` from `server` directory
+
+### To add a new executable script:
+
+1. Write your script. Use `./scripts/check-schema.js` as a reference. Place it in `server/scripts`
+2. Ensure `#!/usr/bin/env node` is at the top of the file, including the `#!`. This is a special comment that allows us to not have to type `node` before our script call
+3. Run `chmod +x <path/to/script_file_name>` to make it executable. This is a permanent change (unless we manually change it later)
+4. Done!
+
 
 ## To run tests:
 1. `npm test` from `server` directory
