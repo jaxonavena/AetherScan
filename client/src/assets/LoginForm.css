@@ -3,11 +3,12 @@
 .login-form {
     display: flex;
     flex-direction: column;
+    margin: 0 auto;
   }
 
   .input-wrapper {
     position: relative;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
   }
 
   .input-icon {
@@ -18,12 +19,10 @@
     color: #000000;
     font-size: 1rem;
   }
-  
+
   .login-form input {
-    width: 100%;
-    padding: 0.8rem 1rem;
     padding-left: 2.5rem;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem;
     border: none;
     border-radius: 30px; /* pill-shaped corners */
     font-size: 1rem;
@@ -31,11 +30,11 @@
     background-color: #fff;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
   }
-  
+
   .login-form input::placeholder {
     color: #aaa;
   }
-  
+
   .login-form button {
     width: 100%;
     padding: 0.8rem 1rem;
@@ -47,7 +46,7 @@
     font-weight: 600;
     cursor: pointer;
   }
-  
+
   .login-form button:hover {
     background-color: #514a9d; /* slightly darker purple on hover */
   }
@@ -55,4 +54,3 @@
   .login-form input:hover{
     background-color: #696969;
   }
-  
