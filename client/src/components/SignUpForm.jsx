@@ -1,38 +1,41 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Dashboard from '../pages/Dashboard';
-import '../assets/LoginForm.css'
+import '../assets/SignUpForm.css'
 
-function LoginForm() {
+function SignUpForm() {
   const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [succes, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-
+    setSuccess('');
+    
     try {
-        const response = await axios.post('http://localhost:8080/users/login', {
+        const response = await axios.post('http://localhost:8080/users/register', {
             email,
+            username,
             password
         });
-        console.log('Logging in with:', { email, password });
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        //navigate to dashboard when logged in
-        navigate('/dashboard');
-    } catch(err) {
-        console.error('Login error:', error)
-        setError(err.response ? err.response.data.message : 'Login failed');
-    };
-
+        console.log("response gotten back", response);
+        setSuccess(response.data.message || 'Account created successfully!');
+        setTimeout(() => {
+            navigate('/login');
+        }, 2000);
+    } catch(err){
+        console.error('Signup error:', error);
+        setError(err.response? err.response.data.message : 'Signup failed');
+    }
+    console.log('Signing up with:', { email, username, password });
   };
 
   return (
-    <form onSubmit={handleSubmit} className="login-form">
+    <form onSubmit={handleSubmit} className="signup-form">
       <div className="input-wrapper">
         <i className="fa-solid fa-envelope input-icon" />
         <input
@@ -40,6 +43,16 @@ function LoginForm() {
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </div>
+      <div className="input-wrapper">
+        <i className="fa-solid fa-user input-icon" />
+        <input
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           required
         />
       </div>
@@ -53,7 +66,7 @@ function LoginForm() {
           required
         />
       </div>
-      <button type="submit">Log In</button>
+      <button type="submit">Sign Up</button>
     </form>
   );
 }
@@ -79,4 +92,4 @@ const styles = {
     }
   };
 
-export default LoginForm;
+export default SignUpForm;

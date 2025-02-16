@@ -4,16 +4,18 @@ const knex = require('knex')(require('../knexfile').development);
 const router = express.Router();
 
 router.post('/register', async (req, res) => {
-  const { name, email, password } = req.body;
-
+  const { email, username, password } = req.body;
+  console.log('Request', req.body);
   try {
     const hashedPassword = await bcrypt.hash(password, 10); // 10 rounds of salting
 
     const [newUser] = await knex('users').insert({
-      name,
-      email,
+      name: username,
+      email: email,
       password: hashedPassword,
     }).returning('*');
+
+    console.log('User', newUser);
 
     // respond with new user
     res.status(201).json({
