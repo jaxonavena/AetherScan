@@ -4,7 +4,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css';
 import {BrowserRouter as Router, Routes, Route,Navigate} from 'react-router-dom';
 import Login from '../pages/Login';
 import SignUp from '../pages/SignUp';
-import Dashboard from '../pages/Dashboard';
+import HomePage from '../pages/HomePage';
 
 function App() {
   return (
@@ -13,7 +13,7 @@ function App() {
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<SignUp />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/homepage/*" element={<HomePage />} />
       </Routes>
     </Router>
   )
