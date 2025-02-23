@@ -1,15 +1,12 @@
-import React from "react";
-import '../assets/Dashboard.css';
+import React from 'react';
 
 const Dashboard = () => {
-  return (
-    <div className="dashboard-container">
-      <h1 className="dashboard-title">Drone Search & Rescue Dashboard</h1>
-      <div className="live-feed-container">
-        <p className="live-feed-placeholder">Live feed will appear here</p>
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <h2>Dashboard</h2>
+            <h1>Will display status of the drone, battery life, coordinates, etc</h1>
+        </div>
+    );
 };
 
 export default Dashboard;

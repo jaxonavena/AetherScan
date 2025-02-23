@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Dashboard from '../pages/Dashboard';
+import HomePage from '../pages/HomePage';
 import '../assets/LoginForm.css'
 
 function LoginForm() {
@@ -22,8 +22,7 @@ function LoginForm() {
         console.log('Logging in with:', { email, password });
         const token = response.data.token;
         localStorage.setItem('token', token);
-        //navigate to dashboard when logged in
-        navigate('/dashboard');
+        navigate('/homepage');
     } catch(err) {
         console.error('Login error:', error)
         setError(err.response ? err.response.data.message : 'Login failed');
