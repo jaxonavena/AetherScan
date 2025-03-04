@@ -7,3 +7,4 @@ Directory used to store files related to model weights, inference tests, trainin
 3. Use `model_test.py` from `mlops` directory: `python3 tests/model_test.py`
     - Person in water: specify `water_test` path in the test inference section of `model_test.py`
     - Person in woods: Specify `woods_test` path in the test inference section of `model_test.py`
+    - Multiple persons: Specify `multi_person` path in the test inference section of `model_test.py`
