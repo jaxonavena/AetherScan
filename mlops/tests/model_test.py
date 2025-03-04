@@ -8,6 +8,8 @@ water_test = os.path.join("sample_data", "water_test", "img2.jpg")
 
 woods_test = os.path.join("sample_data", "woods_test", "img1.jpg")
 
+multi_person = os.path.join("sample_data", "multi_person", "img1.jpg")
+
 # Test inference
 results = model(woods_test)
 
