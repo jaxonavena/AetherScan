@@ -3,11 +3,14 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import '../assets/LoginForm.css'
+import supabase from '../utils/supabase';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [session, setSession] = useState();
+  const [user, setUser] = useState();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -15,14 +18,23 @@ function LoginForm() {
     setError('');
 
     try {
-        const response = await axios.post('http://localhost:8080/users/login', {
-            email,
-            password
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
         });
         console.log('Logging in with:', { email, password });
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        navigate('/homepage');
+        console.log("data: ", data);
+
+        if (!error) {
+          setSession(data.session);
+          setUser(data.user);
+          
+          setTimeout(() => {
+            navigate('/homepage');
+          }, 2000);
+        } else {
+          console.error("Login error: ", error);
+        }
     } catch(err) {
         console.error('Login error:', error)
         setError(err.response ? err.response.data.message : 'Login failed');
