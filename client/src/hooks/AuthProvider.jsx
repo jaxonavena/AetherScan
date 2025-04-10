@@ -19,35 +19,38 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
   const loginAction = async (data) => {
     setLoading(true);
-    const { user, error } = await supabase.auth.signInWithPassword({
+    try {
+      const { data: { user }, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password,
-    })
-    .then(async () => {
-        console.log("User logged in: ", user);
-        localStorage.setItem("site", user);
-        setUser(user);
-        setLoading(false);
-        navigate("/homepage");
-        return;
-    })
-    .catch((error) => {
-        console.error("Login error: ", error);
-        setLoading(false);
-        return;
-    });
+      });
+      
+      if (error) throw error;
+      
+      console.log("User logged in: ", user);
+      localStorage.setItem("site", JSON.stringify(user));
+      setUser(user);
+      setLoading(false);
+      navigate("/homepage");
+    } catch (error) {
+      console.error("Login error: ", error);
+      setLoading(false);
+    }
   };
+
   const logOut = async () => {
     localStorage.removeItem("site");
-    navigate("/login");
-    console.log("logged out");
-    return await supabase.auth.signOut()
+    setUser(null);
+    setLoading(true);
+    await supabase.auth.signOut()
     .then(() => {
       console.log("Successfully signed out");
     })
     .catch((error) => {
       console.error("Sign out error: ", error);
     });
+    navigate("/login");
+    setLoading(false);
   };
 
   return (
