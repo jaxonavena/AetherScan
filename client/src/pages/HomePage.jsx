@@ -7,10 +7,16 @@ import InteractiveMap from "./InteractiveMap";
 import Settings from "./Settings";
 import Support from "./Support";
 import Dashboard from "./Dashboard";
-
-
+import { useAuth } from '../hooks/AuthProvider';
 
 function HomePage () {
+  const auth = useAuth(); // Set's up the authenticator function
+  const handleLogout = async (e) => {
+    e.preventDefault();
+    await auth.logOut();
+    console.log("User logged out");
+  };
+
   return (
     <div className="homepage-container">
       <aside className="sidebar">
@@ -73,7 +79,7 @@ function HomePage () {
           <nav className="sidebar-nav">
           <ul>
             <li>
-              <Link to="/login">
+              <Link to="/login" onClick={handleLogout}>
                 <i className="fas fa-sign-out-alt"></i>
                 <span>Log out</span>
               </Link>
