@@ -25,7 +25,7 @@ const Settings = () => {
                 // insert a new row if it doesn't exist
                 const { data: insertData, error: insertError } = await supabase
                     .from('settings')
-                    .insert({ uid: curUser.id, obs_server: 'ws://localhost:4455' });
+                    .insert({ uid: curUser.id, obs_server: 'http://localhost:5001/video_feed' });
                 if (insertError) {
                     console.error('Error inserting default settings:', insertError);
                     return;
@@ -90,13 +90,13 @@ const Settings = () => {
                     type="text"
                     id="obsServer"
                     value={obsServer}
-                    placeholder="ws://localhost:4455"
+                    placeholder="http://localhost:5001/video_feed"
                     className="input-field"
                     onChange={(e) => setObsServer(e.target.value)}
                     style={{ width: '15%' }}
                     required
                 />
-                <p className="help-text">Enter your OBS WebSocket server address (e.g., ws://localhost:4455)</p>
+                <p className="help-text">Enter your OBS WebSocket server address (e.g., http://localhost:5001/video_feed)</p>
             </div>
             <button onClick={handleSettingsChange}>Update Settings</button>
         </div>
