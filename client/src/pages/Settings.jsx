@@ -4,14 +4,15 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../hooks/AuthProvider';
 
 const Settings = () => {
-    const [obsServer, setObsServer] = useState('http://localhost:5001/video_feed');
+    // State to hold the OBS server address
+    const [obsServer, setObsServer] = useState('');
 
     // Get the user from the AuthProvider
     const curUser = useAuth().curUser;
-    console.log('Current User:', curUser);
     // Fetch the current OBS server from the database when the component mounts
     useEffect(() => {
         // Try to lookup the row using the user ID
+        console.log('Current User:', curUser);
         const fetchSettings = async () => {
             console.log("Fetching settings for user ID:", curUser.id);
             const { data, error } = await supabase
@@ -24,7 +25,7 @@ const Settings = () => {
                 // insert a new row if it doesn't exist
                 const { data: insertData, error: insertError } = await supabase
                     .from('settings')
-                    .insert({ uid: curUser.id, obs_server: obsServer });
+                    .insert({ uid: curUser.id, obs_server: 'ws://localhost:4455' });
                 if (insertError) {
                     console.error('Error inserting default settings:', insertError);
                     return;
@@ -42,14 +43,42 @@ const Settings = () => {
 
     // Function to handle changes to the OBS server input
     const handleObsServerChange = async (obsServerValue) => {
+        // send value to supabase DB
+        console.log('User ID:', curUser.id);
+        console.log('New OBS server value:', obsServerValue);
+
+        // Check if the obsServerValue is empty
+        if (!obsServerValue) {
+            return "Please enter a valid OBS server address.";
+        }
+
+        // Update the OBS server in the database
+        const { data, error } = await supabase
+            .from('settings')
+            .update({ obs_server: obsServerValue })
+            .eq('uid', curUser.id);
+        if (error) {
+            console.error('Error updating OBS server:', error);
+            return "Failed to update OBS server: " + error.message;
+        }
+        if (data) {
+            console.log('OBS server updated:', data);
+        }
+        return null;
     };
 
-    const handleSettingsChange = (e) => {
+    const handleSettingsChange = async (e) => {
         e.preventDefault();
         // Call the function to handle the OBS server change
-        handleObsServerChange(obsServer);
+        let err = null;
+        err = await handleObsServerChange(obsServer);
 
-        alert('Settings updated successfully!');
+        // Check if there was an error
+        if (err) {
+            alert(err);
+        } else {
+            alert('Settings updated successfully!');
+        }
     }    
     
     return (
@@ -64,6 +93,7 @@ const Settings = () => {
                     placeholder="ws://localhost:4455"
                     className="input-field"
                     onChange={(e) => setObsServer(e.target.value)}
+                    style={{ width: '15%' }}
                     required
                 />
                 <p className="help-text">Enter your OBS WebSocket server address (e.g., ws://localhost:4455)</p>
