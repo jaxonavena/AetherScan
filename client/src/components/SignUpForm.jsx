@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../assets/SignUpForm.css'
+import '../assets/SignUpForm.css';
+import supabase from '../utils/supabase';
 
 function SignUpForm() {
   const [email, setEmail] = useState('');
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
-  const [succes, setSuccess] = useState('');
+  const [success, setSuccess] = useState('');
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -17,21 +18,26 @@ function SignUpForm() {
     setSuccess('');
     
     try {
-        const response = await axios.post('http://localhost:8080/users/register', {
-            email,
-            username,
-            password
+        const { data, error } = await supabase.auth.signUp({
+          email: email,
+          password: password,
         });
-        console.log("response gotten back", response);
-        setSuccess(response.data.message || 'Account created successfully!');
-        setTimeout(() => {
+        console.log('Signing up with:', { email, username, password });
+        console.log("data: ", data);
+        
+        if (!error) {
+          setSuccess('Account created successfully!');
+          console.log('Signup successful: ', success);
+          setTimeout(() => {
             navigate('/login');
-        }, 2000);
+          }, 2000);
+        } else {
+          console.log("Signup error: ", error);
+        }
     } catch(err){
-        console.error('Signup error:', error);
-        setError(err.response? err.response.data.message : 'Signup failed');
+      setError(err.response? err.response.data.message : 'Signup failed');
+      console.error('Signup error: ', error);
     }
-    console.log('Signing up with:', { email, username, password });
   };
 
   return (

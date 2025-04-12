@@ -1,33 +1,17 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import HomePage from '../pages/HomePage';
 import '../assets/LoginForm.css'
+import { useAuth } from '../hooks/AuthProvider';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const navigate = useNavigate();
 
+  const auth = useAuth(); // Set's up the authenticator function
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-
-    try {
-        const response = await axios.post('http://localhost:8080/users/login', {
-            email,
-            password
-        });
-        console.log('Logging in with:', { email, password });
-        const token = response.data.token;
-        localStorage.setItem('token', token);
-        navigate('/homepage');
-    } catch(err) {
-        console.error('Login error:', error)
-        setError(err.response ? err.response.data.message : 'Login failed');
-    };
-
+    await auth.loginAction({email, password});
   };
 
   return (
