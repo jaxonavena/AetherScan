@@ -6,6 +6,6 @@ import React from 'react';
 
 createRoot(document.getElementById('base')).render(
   <ErrorBoundary>
-    <App />
+    <App/>
   </ErrorBoundary>
 )
